@@ -1,5 +1,5 @@
 # pg_toolkit_brazil
-PostgreSQ: extension that provides Brazilian specific data types, functions and operators.
+PostgreSQL: extension that provides Brazilian specific data types, functions and operators.
 
 ## Supported PostgreSQL versions
 
