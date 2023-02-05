@@ -1,0 +1,59 @@
+---
+name: Run extension Regression Tests
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  installcheck:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch:
+          - master
+          - REL_15_STABLE
+          - REL_14_STABLE
+          - REL_13_STABLE
+          - REL_12_STABLE
+          - REL_11_STABLE
+
+    steps:
+      - name: Install PostgreSQL build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential bison flex zlib1g-dev libreadline-dev
+
+      - name: Checkout PostgreSQL repository
+        uses: actions/checkout@v2
+        with:
+          repository: postgres/postgres
+          ref: ${{ matrix.branch }}
+          path: postgres
+          fetch-depth: 2
+
+      - name: Configure PostgreSQL build
+        run: |
+          cd postgres
+          ./configure --prefix=/tmp/pgsql
+
+      - name: Build and install PostgreSQL
+        run: |
+          make -j -C postgres install
+
+      - name: Create new PostgreSQL cluster
+        run: |
+          mkdir /tmp/data
+          chmod 0700 /tmp/data
+          /tmp/pgsql/bin/initdb -D /tmp/data -A trust
+          /tmp/pgsql/bin/pg_ctl -D /tmp/data -l /tmp/data/postgresql.log start
+
+      - name: Checkout pg_toolkit_brazil extension repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Run pg_toolkit_brazil extension regression tests
+        run: |
+          make PG_CONFIG=/tmp/pgsql/bin/pg_config USE_PGXS=1
+          make PG_CONFIG=/tmp/pgsql/bin/pg_config USE_PGXS=1 install
+          make PG_CONFIG=/tmp/pgsql/bin/pg_config USE_PGXS=1 installcheck
