@@ -13,3 +13,8 @@ SELECT * FROM pessoa;
  401.002.763-00
 (1 row)
 
+-- CPFs inválidos
+SELECT cpf '12345';
+ERROR:  CPF inválido
+LINE 1: SELECT cpf '12345';
+                   ^

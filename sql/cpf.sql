@@ -4,3 +4,6 @@ CREATE TABLE pessoa(cpf cpf);
 \d pessoa
 INSERT INTO pessoa VALUES (cpf '40100276300');
 SELECT * FROM pessoa;
+
+-- CPFs inválidos
+SELECT cpf '12345';
