@@ -1,0 +1,15 @@
+CREATE EXTENSION pg_toolkit_brazil;
+CREATE TABLE pessoa(cpf cpf);
+\d pessoa
+             Table "public.pessoa"
+ Column | Type | Collation | Nullable | Default 
+--------+------+-----------+----------+---------
+ cpf    | cpf  |           |          | 
+
+INSERT INTO pessoa VALUES (cpf '40100276300');
+SELECT * FROM pessoa;
+      cpf       
+----------------
+ 401.002.763-00
+(1 row)
+
