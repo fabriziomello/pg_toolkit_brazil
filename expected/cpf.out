@@ -6,12 +6,14 @@ CREATE TABLE pessoa(cpf cpf);
 --------+------+-----------+----------+---------
  cpf    | cpf  |           |          | 
 
-INSERT INTO pessoa VALUES (cpf '40100276300');
+-- Valid and generated CPFs using: https://theonegenerator.com/pt/geradores/documentos/gerador-de-cpf/
+INSERT INTO pessoa VALUES (cpf '40100276300'), (16426332836);
 SELECT * FROM pessoa;
       cpf       
 ----------------
  401.002.763-00
-(1 row)
+ 164.263.328-36
+(2 rows)
 
 -- invalid CPFs
 SELECT cpf '12345';

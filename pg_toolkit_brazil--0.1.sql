@@ -38,3 +38,8 @@ CREATE TYPE cpf (
     SEND    = cpfsend,
     LIKE    = int8
 );
+
+--
+--  Implicit and assignment type casts.
+--
+CREATE CAST (bigint AS cpf) WITHOUT FUNCTION AS IMPLICIT;

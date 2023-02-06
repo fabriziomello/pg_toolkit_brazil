@@ -2,7 +2,8 @@ CREATE EXTENSION pg_toolkit_brazil;
 
 CREATE TABLE pessoa(cpf cpf);
 \d pessoa
-INSERT INTO pessoa VALUES (cpf '40100276300');
+-- Valid and generated CPFs using: https://theonegenerator.com/pt/geradores/documentos/gerador-de-cpf/
+INSERT INTO pessoa VALUES (cpf '40100276300'), (16426332836);
 SELECT * FROM pessoa;
 
 -- invalid CPFs
