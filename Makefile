@@ -10,3 +10,6 @@ PGFILEDESC = "pg_toolkit_brazil - PostgreSQL extension that provides Brazilian s
 PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
+
+pgindent:
+	$(shell scripts/run_pgindent.sh)	
