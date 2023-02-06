@@ -81,3 +81,40 @@ ERROR:  invalid CPF
 LINE 1: SELECT cpf '00000000000';
                    ^
 DETAIL:  CPF should not be less than 100 and greater than 99999999999.
+-- operators
+SELECT cpf '40100276300' =  cpf '40100276300';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cpf '40100276300' <> cpf '16426332836';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cpf '40100276300' <  cpf '16426332836';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT cpf '40100276300' <= cpf '16426332836';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT cpf '40100276300' >= cpf '16426332836';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cpf '40100276300' >  cpf '16426332836';
+ ?column? 
+----------
+ t
+(1 row)
+
