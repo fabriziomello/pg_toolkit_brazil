@@ -13,8 +13,69 @@ SELECT * FROM pessoa;
  401.002.763-00
 (1 row)
 
--- CPFs inválidos
+-- invalid CPFs
 SELECT cpf '12345';
-ERROR:  CPF inválido
+ERROR:  invalid CPF
 LINE 1: SELECT cpf '12345';
                    ^
+DETAIL:  Invalid check digit for the CPF.
+SELECT cpf '99';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '99';
+                   ^
+DETAIL:  CPF should not be less than 100 and greater than 99999999999.
+SELECT cpf '123456789012';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '123456789012';
+                   ^
+DETAIL:  CPF should not be less than 100 and greater than 99999999999.
+SELECT cpf '11111111111';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '11111111111';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '22222222222';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '22222222222';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '33333333333';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '33333333333';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '44444444444';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '44444444444';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '55555555555';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '55555555555';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '66666666666';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '66666666666';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '77777777777';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '77777777777';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '88888888888';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '88888888888';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '99999999999';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '99999999999';
+                   ^
+DETAIL:  All CPF digits should not be equal.
+SELECT cpf '00000000000';
+ERROR:  invalid CPF
+LINE 1: SELECT cpf '00000000000';
+                   ^
+DETAIL:  CPF should not be less than 100 and greater than 99999999999.
