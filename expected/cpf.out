@@ -1,18 +1,23 @@
 CREATE EXTENSION pg_toolkit_brazil;
-CREATE TABLE pessoa(cpf cpf);
+CREATE TABLE pessoa(
+    cpf cpf NOT NULL,
+    PRIMARY KEY (cpf)
+);
 \d pessoa
              Table "public.pessoa"
  Column | Type | Collation | Nullable | Default 
 --------+------+-----------+----------+---------
- cpf    | cpf  |           |          | 
+ cpf    | cpf  |           | not null | 
+Indexes:
+    "pessoa_pkey" PRIMARY KEY, btree (cpf)
 
 -- Valid and generated CPFs using: https://theonegenerator.com/pt/geradores/documentos/gerador-de-cpf/
 INSERT INTO pessoa VALUES (cpf '40100276300'), (16426332836);
-SELECT * FROM pessoa;
+SELECT * FROM pessoa ORDER BY cpf;
       cpf       
 ----------------
- 401.002.763-00
  164.263.328-36
+ 401.002.763-00
 (2 rows)
 
 -- invalid CPFs

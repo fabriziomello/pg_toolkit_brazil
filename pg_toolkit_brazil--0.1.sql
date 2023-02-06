@@ -146,3 +146,25 @@ CREATE OPERATOR > (
     RESTRICT   = scalargtsel,
     JOIN       = scalargtjoinsel
 );
+
+--
+-- Support functions for indexing.
+--
+
+CREATE FUNCTION cpf_cmp(cpf, cpf)
+RETURNS int4
+AS 'btint8cmp'
+LANGUAGE internal STRICT IMMUTABLE PARALLEL SAFE;
+
+--
+-- The btree indexing operator class.
+--
+
+CREATE OPERATOR CLASS cpf_ops
+DEFAULT FOR TYPE CPF USING btree AS
+    OPERATOR    1   <  (cpf, cpf),
+    OPERATOR    2   <= (cpf, cpf),
+    OPERATOR    3   =  (cpf, cpf),
+    OPERATOR    4   >= (cpf, cpf),
+    OPERATOR    5   >  (cpf, cpf),
+    FUNCTION    1   cpf_cmp(cpf, cpf);
