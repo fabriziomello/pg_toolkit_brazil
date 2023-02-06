@@ -1,7 +1,7 @@
 MODULE_big = pg_toolkit_brazil
-OBJS = cpf.o
+OBJS = cpf.o cnpj.o
 
-REGRESS = cpf
+REGRESS = cpf cnpj
 
 EXTENSION = pg_toolkit_brazil
 DATA = pg_toolkit_brazil--0.1.sql

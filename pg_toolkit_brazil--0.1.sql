@@ -38,3 +38,39 @@ CREATE TYPE cpf (
     SEND    = cpfsend,
     LIKE    = int8
 );
+
+CREATE TYPE cnpj;
+
+--
+--  Input and output functions.
+--
+CREATE FUNCTION cnpjin(cstring)
+RETURNS cnpj
+AS 'MODULE_PATHNAME'
+LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpjout(cnpj)
+RETURNS cstring
+AS 'MODULE_PATHNAME'    
+LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpjrecv(internal)
+RETURNS cnpj
+AS 'int8recv'
+LANGUAGE internal STABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpjsend(cnpj)
+RETURNS bytea
+AS 'int8send'
+LANGUAGE internal STABLE STRICT PARALLEL SAFE;
+
+--
+--  Type definition
+--
+CREATE TYPE cnpj (
+    INPUT   = cnpjin,
+    OUTPUT  = cnpjout,
+    RECEIVE = cnpjrecv,
+    SEND    = cnpjsend,
+    LIKE    = int8
+);

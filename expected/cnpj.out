@@ -1,0 +1,29 @@
+CREATE EXTENSION pg_toolkit_brazil;
+CREATE TABLE empresa(cnpj cnpj);
+\d empresa
+             Table "public.empresa"
+ Column | Type | Collation | Nullable | Default 
+--------+------+-----------+----------+---------
+ cnpj   | cnpj |           |          | 
+
+INSERT INTO empresa VALUES (cnpj '00000000000000');
+
+SELECT * FROM empresa;
+        cnpj
+--------------------
+ 00.000.000/0000-00
+(1 row)
+
+DELETE FROM empresa;
+INSERT INTO empresa VALUES (cnpj '33000167066129');
+SELECT * FROM empresa;
+        cnpj
+--------------------
+ 33.000.167/0661-29
+(1 row)
+
+SELECT cnpj '00000000000001';
+ERROR:  invalid CNPJ
+LINE 1: SELECT cnpj '00000000000001';
+                    ^
+DETAIL:  Invalid check digit for the CNPJ. (00 != 1);
