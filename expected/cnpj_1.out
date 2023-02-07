@@ -40,3 +40,21 @@ SELECT cnpj '33000.167/0661-29';
 ERROR:  invalid input syntax for integer: "33000.167/0661-29"
 LINE 1: SELECT cnpj '33000.167/0661-29';
                     ^
+SELECT CNPJ '00000000000000' = CNPJ '00.000.000/0000-00';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT CNPJ '00000000000000' = CNPJ '00.001.180/0001-26';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT CNPJ '00000000000000' < CNPJ '00.001.180/0001-26';
+ ?column? 
+----------
+ t
+(1 row)
+

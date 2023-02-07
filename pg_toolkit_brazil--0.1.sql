@@ -206,3 +206,133 @@ CREATE TYPE cnpj (
     SEND    = cnpjsend,
     LIKE    = int8
 );
+
+--
+--  Implicit and assignment type casts.
+--
+
+CREATE CAST (bigint AS cnpj) WITHOUT FUNCTION AS IMPLICIT;
+
+--
+-- Operator Functions.
+--
+
+CREATE FUNCTION cnpj_eq( cnpj, cnpj )
+RETURNS bool
+AS 'int8eq'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpj_ne( cnpj, cnpj )
+RETURNS bool
+AS 'int8ne'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpj_lt( cnpj, cnpj )
+RETURNS bool
+AS 'int8lt'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpj_le( cnpj, cnpj )
+RETURNS bool
+AS 'int8le'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpj_gt( cnpj, cnpj )
+RETURNS bool
+AS 'int8gt'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+CREATE FUNCTION cnpj_ge( cnpj, cnpj )
+RETURNS bool
+AS 'int8ge'
+LANGUAGE internal IMMUTABLE STRICT PARALLEL SAFE;
+
+--
+-- Operators.
+--
+
+CREATE OPERATOR = (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    COMMUTATOR = =,
+    NEGATOR    = <>,
+    PROCEDURE  = cnpj_eq,
+    RESTRICT   = eqsel,
+    JOIN       = eqjoinsel,
+    HASHES,
+    MERGES
+);
+
+CREATE OPERATOR <> (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    NEGATOR    = =,
+    COMMUTATOR = <>,
+    PROCEDURE  = cnpj_ne,
+    RESTRICT   = neqsel,
+    JOIN       = neqjoinsel
+);
+
+CREATE OPERATOR < (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    NEGATOR    = >=,
+    COMMUTATOR = >,
+    PROCEDURE  = cnpj_lt,
+    RESTRICT   = scalarltsel,
+    JOIN       = scalarltjoinsel
+);
+
+CREATE OPERATOR <= (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    NEGATOR    = >,
+    COMMUTATOR = >=,
+    PROCEDURE  = cnpj_le,
+    RESTRICT   = scalarltsel,
+    JOIN       = scalarltjoinsel
+);
+
+CREATE OPERATOR >= (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    NEGATOR    = <,
+    COMMUTATOR = <=,
+    PROCEDURE  = cnpj_ge,
+    RESTRICT   = scalargtsel,
+    JOIN       = scalargtjoinsel
+);
+
+CREATE OPERATOR > (
+    LEFTARG    = CNPJ,
+    RIGHTARG   = CNPJ,
+    NEGATOR    = <=,
+    COMMUTATOR = <,
+    PROCEDURE  = cnpj_gt,
+    RESTRICT   = scalargtsel,
+    JOIN       = scalargtjoinsel
+);
+
+--
+-- Support functions for indexing.
+--
+
+CREATE FUNCTION cnpj_cmp(cnpj, cnpj)
+RETURNS int4
+AS 'btint8cmp'
+LANGUAGE internal STRICT IMMUTABLE PARALLEL SAFE;
+
+--
+-- The btree indexing operator class.
+--
+
+CREATE OPERATOR CLASS cnpj_ops
+DEFAULT FOR TYPE CNPJ USING btree AS
+    OPERATOR    1   <  (cnpj, cnpj),
+    OPERATOR    2   <= (cnpj, cnpj),
+    OPERATOR    3   =  (cnpj, cnpj),
+    OPERATOR    4   >= (cnpj, cnpj),
+    OPERATOR    5   >  (cnpj, cnpj),
+    FUNCTION    1   cnpj_cmp(cnpj, cnpj);
+
+
