@@ -27,12 +27,12 @@ cnpjout(PG_FUNCTION_ARGS)
 }
 
 static int
-compute_cnpj_check_digits(long int cnpj)
+compute_cnpj_check_digits(int64 cnpj)
 {
 	int			i = 0;
-	long int	d1 = 0,
+	int64		d1 = 0,
 				d2 = 0;
-	long int	d[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	int64		d[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 	/* remove last digit */
