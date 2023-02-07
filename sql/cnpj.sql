@@ -1,5 +1,3 @@
-CREATE EXTENSION pg_toolkit_brazil;
-
 CREATE TABLE empresa(cnpj cnpj);
 \d empresa
 INSERT INTO empresa VALUES (cnpj '00000000000000');
