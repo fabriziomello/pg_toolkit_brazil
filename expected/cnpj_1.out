@@ -37,6 +37,6 @@ SELECT cnpj '33.000.167/0661-29';
 (1 row)
 
 SELECT cnpj '33000.167/0661-29';
-ERROR:  invalid input syntax for type bigint: "33000.167/0661-29"
+ERROR:  invalid input syntax for integer: "33000.167/0661-29"
 LINE 1: SELECT cnpj '33000.167/0661-29';
                     ^
