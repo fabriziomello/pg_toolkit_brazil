@@ -14,10 +14,10 @@ cnpjout(PG_FUNCTION_ARGS)
 	char	   *result;
 
 	/* XX.XXX.XXX/YYYY-ZZ */
-	group[0] = (val / 1000000000000) % 100; /* first group of three digits */
-	group[1] = (val / 1000000000) % 1000;	/* second group of three digits */
-	group[2] = (val / 1000000) % 1000;	/* third group of three digits */
-	group[3] = (val / 100) % 10000; /* third group of three digits */
+	group[0] = (val / 1000000000000) % 100; /* first two digits */
+	group[1] = (val / 1000000000) % 1000;	/* second group, three digits */
+	group[2] = (val / 1000000) % 1000;	/* third group, three digits */
+	group[3] = (val / 100) % 10000; /* fourth group, four digits */
 	group[4] = (val % 100);		/* check digits (last two digits) */
 
 	result = psprintf("%02d.%03d.%03d/%04d-%02d",
@@ -35,7 +35,7 @@ compute_cnpj_check_digits(int64 cnpj)
 	int64		d[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
-	/* remove last digit */
+	/* the first digit enters in the second check, so remove only the last */
 	cnpj = cnpj / 10;
 
 	for (i = 12; i >= 0; i--)
