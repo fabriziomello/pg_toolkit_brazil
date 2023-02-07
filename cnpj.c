@@ -14,14 +14,14 @@ cnpjout(PG_FUNCTION_ARGS)
 	char	   *result;
 
 	/* XX.XXX.XXX/YYYY-ZZ */
-	group[0] = (val / 1000000000000 ) % 100;	/* first group of three digits */
+	group[0] = (val / 1000000000000) % 100; /* first group of three digits */
 	group[1] = (val / 1000000000) % 1000;	/* second group of three digits */
 	group[2] = (val / 1000000) % 1000;	/* third group of three digits */
-	group[3] = (val / 100) % 10000;	/* third group of three digits */
+	group[3] = (val / 100) % 10000; /* third group of three digits */
 	group[4] = (val % 100);		/* check digits (last two digits) */
 
 	result = psprintf("%02d.%03d.%03d/%04d-%02d",
-			group[0], group[1], group[2], group[3], group[4]);
+					  group[0], group[1], group[2], group[3], group[4]);
 
 	PG_RETURN_CSTRING(result);
 }
@@ -29,10 +29,10 @@ cnpjout(PG_FUNCTION_ARGS)
 static int
 compute_cnpj_check_digits(long int cnpj)
 {
-	int		i = 0;
+	int			i = 0;
 	long int	d1 = 0,
-			d2 = 0;
-	long int	d[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+				d2 = 0;
+	long int	d[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 	/* remove last digit */
@@ -48,14 +48,16 @@ compute_cnpj_check_digits(long int cnpj)
 	d1 += (9 * d[4]) + (8 * d[5]) + (7 * d[6]) + (6 * d[7]);
 	d1 += (5 * d[8]) + (4 * d[9]) + (3 * d[10]) + (2 * d[11]);
 	d1 = 11 - (d1 % 11);
-	if (d1 >= 10) d1 = 0;
+	if (d1 >= 10)
+		d1 = 0;
 
 	d2 = (6 * d[0]) + (5 * d[1]) + (4 * d[2]) + (3 * d[3]);
 	d2 += (2 * d[4]) + (9 * d[5]) + (8 * d[6]) + (7 * d[7]);
 	d2 += (6 * d[8]) + (5 * d[9]) + (4 * d[10]) + (3 * d[11]);
 	d2 += (2 * d[12]);
 	d2 = 11 - (d2 % 11);
-	if (d2 >= 10) d2 = 0;
+	if (d2 >= 10)
+		d2 = 0;
 
 	return (d1 * 10) + d2;
 }
@@ -63,7 +65,8 @@ compute_cnpj_check_digits(long int cnpj)
 static void
 validate_cnpj(int64 cnpj)
 {
-	int check_digits = 0;
+	int			check_digits = 0;
+
 	/* Check sizes */
 	if (cnpj > 99999999999999L)
 	{
@@ -87,7 +90,28 @@ PG_FUNCTION_INFO_V1(cnpjin);
 Datum
 cnpjin(PG_FUNCTION_ARGS)
 {
-	int64		value = DirectFunctionCall1(int8in, PG_GETARG_DATUM(0));
+	char	   *str = PG_GETARG_CSTRING(0);
+	int			a,
+				b,
+				c,
+				d,
+				e;
+	int64		value = 0;
+
+	if (strlen(str) != 18)
+		value = DirectFunctionCall1(int8in, PG_GETARG_DATUM(0));
+	else
+	{
+		int			count;
+
+		count = sscanf(str, "%d.%d.%d/%d-%d", &a, &b, &c, &d, &e);
+		if (count != 5)
+			ereport(ERROR,
+					(errcode(ERRCODE_WRONG_OBJECT_TYPE),
+					 errmsg("invalid CNPJ"),
+					 errdetail("CNPJ must be a number or match the XX.XXX.XXX/YYYY-ZZ pattern")));
+		value = (a * 1000000000000L) + (b * 1000000000) + (c * 1000000) + (d * 100) + e;
+	}
 
 	validate_cnpj(value);
 
