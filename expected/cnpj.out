@@ -24,4 +24,4 @@ SELECT cnpj '00000000000001';
 ERROR:  invalid CNPJ
 LINE 1: SELECT cnpj '00000000000001';
                     ^
-DETAIL:  Invalid check digit for the CNPJ. (00 != 1)
+DETAIL:  Invalid check digit for the CNPJ. (00 != 01)
