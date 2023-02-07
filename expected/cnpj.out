@@ -30,3 +30,13 @@ ERROR:  invalid CNPJ
 LINE 1: SELECT cnpj '100000000000000';
                     ^
 DETAIL:  CNPJ should be less than 99999999999999.
+SELECT cnpj '33.000.167/0661-29';
+        cnpj        
+--------------------
+ 33.000.167/0661-29
+(1 row)
+
+SELECT cnpj '33000.167/0661-29';
+ERROR:  invalid input syntax for integer: "33000.167/0661-29"
+LINE 1: SELECT cnpj '33000.167/0661-29';
+                    ^
