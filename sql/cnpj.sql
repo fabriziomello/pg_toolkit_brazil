@@ -1,4 +1,4 @@
-CREATE TABLE empresa(cnpj cnpj);
+CREATE TABLE empresa(cnpj cnpj PRIMARY KEY);
 \d empresa
 
 -- Banco do Brasil's cnpj

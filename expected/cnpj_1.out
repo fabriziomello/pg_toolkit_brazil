@@ -1,9 +1,11 @@
-CREATE TABLE empresa(cnpj cnpj);
+CREATE TABLE empresa(cnpj cnpj PRIMARY KEY);
 \d empresa
              Table "public.empresa"
  Column | Type | Collation | Nullable | Default 
 --------+------+-----------+----------+---------
- cnpj   | cnpj |           |          | 
+ cnpj   | cnpj |           | not null | 
+Indexes:
+    "empresa_pkey" PRIMARY KEY, btree (cnpj)
 
 -- Banco do Brasil's cnpj
 INSERT INTO empresa VALUES (cnpj '00000000000191');
