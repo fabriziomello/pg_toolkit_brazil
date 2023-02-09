@@ -81,7 +81,7 @@ validate_cnpj(int64 cnpj)
 		ereport(ERROR,
 				(errcode(ERRCODE_WRONG_OBJECT_TYPE),
 				 errmsg("invalid CNPJ"),
-				 errdetail("Invalid check digit for the CNPJ. (%02d != %02ld)", check_digits, cnpj % 100)));
+				 errdetail("Invalid check digit for the CNPJ.")));
 	}
 }
 
