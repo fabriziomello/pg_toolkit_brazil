@@ -106,7 +106,7 @@ cnpjin(PG_FUNCTION_ARGS)
 					(errcode(ERRCODE_WRONG_OBJECT_TYPE),
 					 errmsg("invalid CNPJ"),
 					 errdetail("Formatted CNPJ should match the 99.999.999/9999-99 pattern.")));
-		value = (a * 1000000000000L) + (b * 1000000000) + (c * 1000000) + (d * 100) + e;
+		value = (group[0] * 1000000000000L) + (group[1] * 1000000000) + (group[2] * 1000000) + (group[3] * 100) + group[4];
 	}
 
 	validate_cnpj(value);
