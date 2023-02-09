@@ -100,7 +100,7 @@ cnpjin(PG_FUNCTION_ARGS)
 	{
 		int			count;
 
-		count = sscanf(str, "%d.%d.%d/%d-%d", &a, &b, &c, &d, &e);
+		count = sscanf(str, "%02d.%03d.%03d/%04d-%02d", &group[0], &group[1], &group[2], &group[3], &group[4]);
 		if (count != 5)
 			ereport(ERROR,
 					(errcode(ERRCODE_WRONG_OBJECT_TYPE),
