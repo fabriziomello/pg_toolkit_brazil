@@ -91,11 +91,7 @@ Datum
 cnpjin(PG_FUNCTION_ARGS)
 {
 	char	   *str = PG_GETARG_CSTRING(0);
-	int			a,
-				b,
-				c,
-				d,
-				e;
+	int			group[5];
 	int64		value = 0;
 
 	if (strlen(str) != 18)
