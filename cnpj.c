@@ -105,7 +105,7 @@ cnpjin(PG_FUNCTION_ARGS)
 			ereport(ERROR,
 					(errcode(ERRCODE_WRONG_OBJECT_TYPE),
 					 errmsg("invalid CNPJ"),
-					 errdetail("CNPJ must be a number or match the XX.XXX.XXX/YYYY-ZZ pattern")));
+					 errdetail("Formatted CNPJ should match the 99.999.999/9999-99 pattern.")));
 		value = (a * 1000000000000L) + (b * 1000000000) + (c * 1000000) + (d * 100) + e;
 	}
 
