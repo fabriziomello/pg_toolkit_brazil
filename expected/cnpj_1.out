@@ -1,0 +1,91 @@
+CREATE TABLE empresa(cnpj cnpj PRIMARY KEY);
+\d empresa
+             Table "public.empresa"
+ Column | Type | Collation | Nullable | Default 
+--------+------+-----------+----------+---------
+ cnpj   | cnpj |           | not null | 
+Indexes:
+    "empresa_pkey" PRIMARY KEY, btree (cnpj)
+
+-- Banco do Brasil's cnpj
+INSERT INTO empresa VALUES (cnpj '00000000000191');
+-- Petrobras' cnpj
+INSERT INTO empresa VALUES (cnpj '33000167066129');
+-- Eletrobras' cnpj
+INSERT INTO empresa VALUES (cnpj '00.001.180/0001-26');
+SELECT * FROM empresa ORDER BY cnpj;
+        cnpj        
+--------------------
+ 00.000.000/0001-91
+ 00.001.180/0001-26
+ 33.000.167/0661-29
+(3 rows)
+
+-- Invalid digit
+SELECT cnpj '00000000000001';
+ERROR:  invalid CNPJ
+LINE 1: SELECT cnpj '00000000000001';
+                    ^
+DETAIL:  Invalid check digit for the CNPJ.
+-- cnpj bigger than expected
+SELECT cnpj '100000000000191';
+ERROR:  invalid CNPJ
+LINE 1: SELECT cnpj '100000000000191';
+                    ^
+DETAIL:  CNPJ should be less than 99999999999999.
+-- Formatted cnpj
+SELECT cnpj '33.000.167/0661-29';
+        cnpj        
+--------------------
+ 33.000.167/0661-29
+(1 row)
+
+-- Invalid format
+SELECT cnpj '33000.167/0661-29';
+ERROR:  invalid input syntax for integer: "33000.167/0661-29"
+LINE 1: SELECT cnpj '33000.167/0661-29';
+                    ^
+-- bigint cast
+SELECT 33000167066129::cnpj;
+        cnpj        
+--------------------
+ 33.000.167/0661-29
+(1 row)
+
+-- operators
+SELECT cnpj '00000000000191' = cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT cnpj '00000000000191' <> cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cnpj '00000000000191' < cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cnpj '00000000000191' <= cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ t
+(1 row)
+
+SELECT cnpj '00000000000191' >= cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ f
+(1 row)
+
+SELECT cnpj '00000000000191' > cnpj '00.001.180/0001-26';
+ ?column? 
+----------
+ f
+(1 row)
+
