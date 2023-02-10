@@ -4,9 +4,17 @@ CREATE TABLE pessoa(
     cpf cpf NOT NULL,
     PRIMARY KEY (cpf)
 );
+
 \d pessoa
+
 -- Valid and generated CPFs using: https://theonegenerator.com/pt/geradores/documentos/gerador-de-cpf/
 INSERT INTO pessoa VALUES (cpf '40100276300'), (16426332836);
+
+-- Should fail the implicit cast because it is an invalid CPF
+INSERT INTO pessoa VALUES (11111111111);
+INSERT INTO pessoa VALUES (16426332830);
+INSERT INTO pessoa VALUES (-1::bigint);
+
 SELECT * FROM pessoa ORDER BY cpf;
 
 -- invalid CPFs

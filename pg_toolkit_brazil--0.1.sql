@@ -41,12 +41,21 @@ CREATE TYPE cpf (
     LIKE    = int8
 );
 
+--
+-- Type casting functions.
+--
+
+CREATE FUNCTION cpfbigint(bigint)
+RETURNS cpf
+AS 'MODULE_PATHNAME'
+LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE;
+
 
 --
 --  Implicit and assignment type casts.
 --
 
-CREATE CAST (bigint AS cpf) WITHOUT FUNCTION AS IMPLICIT;
+CREATE CAST (bigint AS cpf) WITH FUNCTION cpfbigint(bigint) AS IMPLICIT;
 
 --
 -- Operator Functions.
