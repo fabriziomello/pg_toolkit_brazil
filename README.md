@@ -37,4 +37,4 @@ Portions Copyright (c) 1996-2023, The PostgreSQL Global Development Group<br>
 Portions Copyright (c) 1994, The Regents of the University of California
 
 All other parts are licensed under the 3-clause BSD license, see LICENSE file for details.<br>
-Copyright (c) 2020, Fabrízio de Royes Mello <fabriziomello@gmail.com>
+Copyright (c) 2023, Fabrízio de Royes Mello <fabriziomello@gmail.com>

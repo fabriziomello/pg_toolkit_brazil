@@ -1,5 +1,5 @@
 # pg_toolkit_brazil
-comment = 'Normalize SQL Query'
+comment = 'Extension that provides Brazilian specific data types, functions and operators.'
 default_version = '0.1'
 module_pathname = '$libdir/pg_toolkit_brazil'
 relocatable = true
