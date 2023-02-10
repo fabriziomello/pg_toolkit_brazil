@@ -208,10 +208,19 @@ CREATE TYPE cnpj (
 );
 
 --
+-- Type casting functions.
+--
+
+CREATE FUNCTION cnpjbigint(bigint)
+RETURNS cnpj
+AS 'MODULE_PATHNAME'
+LANGUAGE C IMMUTABLE STRICT PARALLEL SAFE;
+
+--
 --  Implicit and assignment type casts.
 --
 
-CREATE CAST (bigint AS cnpj) WITHOUT FUNCTION AS IMPLICIT;
+CREATE CAST (bigint AS cnpj) WITH FUNCTION cnpjbigint(bigint) AS IMPLICIT;
 
 --
 -- Operator Functions.

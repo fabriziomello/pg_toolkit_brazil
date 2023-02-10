@@ -13,6 +13,20 @@ INSERT INTO empresa VALUES (cnpj '00000000000191');
 INSERT INTO empresa VALUES (cnpj '33000167066129');
 -- Eletrobras' cnpj
 INSERT INTO empresa VALUES (cnpj '00.001.180/0001-26');
+-- Check invalids data
+INSERT INTO empresa VALUES (99);
+ERROR:  column "cnpj" is of type cnpj but expression is of type integer
+LINE 1: INSERT INTO empresa VALUES (99);
+                                    ^
+HINT:  You will need to rewrite or cast the expression.
+INSERT INTO empresa VALUES (190);
+ERROR:  column "cnpj" is of type cnpj but expression is of type integer
+LINE 1: INSERT INTO empresa VALUES (190);
+                                    ^
+HINT:  You will need to rewrite or cast the expression.
+INSERT INTO empresa VALUES (-1::bigint);
+ERROR:  invalid CNPJ
+DETAIL:  CNPJ should not be less than 100 and greater than 99999999999999.
 SELECT * FROM empresa ORDER BY cnpj;
         cnpj        
 --------------------
@@ -26,13 +40,13 @@ SELECT cnpj '00000000000001';
 ERROR:  invalid CNPJ
 LINE 1: SELECT cnpj '00000000000001';
                     ^
-DETAIL:  Invalid check digit for the CNPJ.
+DETAIL:  CNPJ should not be less than 100 and greater than 99999999999999.
 -- cnpj bigger than expected
 SELECT cnpj '100000000000191';
 ERROR:  invalid CNPJ
 LINE 1: SELECT cnpj '100000000000191';
                     ^
-DETAIL:  CNPJ should be less than 99999999999999.
+DETAIL:  CNPJ should not be less than 100 and greater than 99999999999999.
 -- Formatted cnpj
 SELECT cnpj '33.000.167/0661-29';
         cnpj        

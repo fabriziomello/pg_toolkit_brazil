@@ -7,6 +7,11 @@ INSERT INTO empresa VALUES (cnpj '00000000000191');
 INSERT INTO empresa VALUES (cnpj '33000167066129');
 -- Eletrobras' cnpj
 INSERT INTO empresa VALUES (cnpj '00.001.180/0001-26');
+-- Check invalids data
+INSERT INTO empresa VALUES (99);
+INSERT INTO empresa VALUES (190);
+INSERT INTO empresa VALUES (-1::bigint);
+
 SELECT * FROM empresa ORDER BY cnpj;
 
 -- Invalid digit
