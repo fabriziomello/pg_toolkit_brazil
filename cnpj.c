@@ -68,12 +68,12 @@ validate_cnpj(int64 cnpj)
 	int			check_digits = 0;
 
 	/* Check sizes */
-	if (cnpj > 99999999999999L)
+	if (cnpj < 100 || cnpj > 99999999999999L)
 	{
 		ereport(ERROR,
 				(errcode(ERRCODE_WRONG_OBJECT_TYPE),
 				 errmsg("invalid CNPJ"),
-				 errdetail("CNPJ should be less than 99999999999999.")));
+				 errdetail("CNPJ should not be less than 100 and greater than 99999999999999.")));
 	}
 	check_digits = compute_cnpj_check_digits(cnpj);
 	if (check_digits != (cnpj % 100))
@@ -108,6 +108,19 @@ cnpjin(PG_FUNCTION_ARGS)
 					 errdetail("Formatted CNPJ should match the 99.999.999/9999-99 pattern.")));
 		value = (group[0] * 1000000000000L) + (group[1] * 1000000000) + (group[2] * 1000000) + (group[3] * 100) + group[4];
 	}
+
+	validate_cnpj(value);
+
+	PG_RETURN_INT64(value);
+}
+
+
+PG_FUNCTION_INFO_V1(cnpjbigint);
+
+Datum
+cnpjbigint(PG_FUNCTION_ARGS)
+{
+	int64		value = PG_GETARG_INT64(0);
 
 	validate_cnpj(value);
 
