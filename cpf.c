@@ -100,3 +100,15 @@ cpfin(PG_FUNCTION_ARGS)
 
 	PG_RETURN_INT64(value);
 }
+
+PG_FUNCTION_INFO_V1(cpfbigint);
+
+Datum
+cpfbigint(PG_FUNCTION_ARGS)
+{
+	int64		value = PG_GETARG_INT64(0);
+
+	validate_cpf(value);
+
+	PG_RETURN_INT64(value);
+}

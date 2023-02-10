@@ -13,6 +13,16 @@ Indexes:
 
 -- Valid and generated CPFs using: https://theonegenerator.com/pt/geradores/documentos/gerador-de-cpf/
 INSERT INTO pessoa VALUES (cpf '40100276300'), (16426332836);
+-- Should fail the implicit cast because it is an invalid CPF
+INSERT INTO pessoa VALUES (11111111111);
+ERROR:  invalid CPF
+DETAIL:  All CPF digits should not be equal.
+INSERT INTO pessoa VALUES (16426332830);
+ERROR:  invalid CPF
+DETAIL:  Invalid check digit for the CPF.
+INSERT INTO pessoa VALUES (-1::bigint);
+ERROR:  invalid CPF
+DETAIL:  CPF should not be less than 100 and greater than 99999999999.
 SELECT * FROM pessoa ORDER BY cpf;
       cpf       
 ----------------
