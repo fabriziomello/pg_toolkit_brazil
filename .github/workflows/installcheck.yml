@@ -48,7 +48,7 @@ jobs:
           /tmp/pgsql/bin/pg_ctl -D /tmp/data -l /tmp/data/postgresql.log start
 
       - name: Checkout pg_toolkit_brazil extension repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
 
