@@ -11,6 +11,7 @@ jobs:
       matrix:
         branch:
           - master
+          - REL_16_BETA2
           - REL_15_STABLE
           - REL_14_STABLE
           - REL_13_STABLE

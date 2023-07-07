@@ -5,7 +5,7 @@ PostgreSQL: extension that provides Brazilian specific data types, functions and
 
 The aim of the project is support as many community-supported major versions of Postgres as possible. Currently, the following versions of PostgreSQL are supported:
 
-11, 12, 13, 14 and 15.
+11, 12, 13, 14, 15 and 16.
 
 ## Installation
 
